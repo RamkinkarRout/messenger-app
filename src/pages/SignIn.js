@@ -41,11 +41,11 @@ export const SignIn = () => {
               <div className="mt-3">
                 <Button block color="blue" onClick={onFacebookSignIn}>
                   <Icon icon="facebook" />
-                  Continue with Facebook
+                  <span className="ml-1">Continue with Facebook</span>
                 </Button>
                 <Button block color="green" onClick={onGoogleSignIn}>
                   <Icon icon="google" />
-                  Continue with Google
+                  <span className="ml-1">Continue with Google</span>
                 </Button>
               </div>
             </Panel>
