@@ -7,6 +7,15 @@
       }
     },
 
+    "rooms": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      "$room_id": {
+        ".read": "auth !== null",
+        ".write": "auth !== null"
+      }
+    },
+
     ".read": false,
     ".write": false
   }
