@@ -3,6 +3,7 @@ import { Alert, Button, Divider, Drawer } from "rsuite";
 import { EditableInput } from "../components/EditableInput";
 import { useProfile } from "../context/profile.context";
 import { database } from "../misc/firebase";
+import { getUserUpdates } from "../misc/helpers";
 import AvatarUploadBtn from "./AvatarUploadBtn";
 import ProviderBlock from "./ProviderBlock";
 
@@ -10,12 +11,17 @@ const Dashboard = ({ onSignOut }) => {
   const { profile } = useProfile();
 
   const onSave = async (newData) => {
-    const databaseNameRef = database
-      .ref(`/profiles/${profile.uid}`)
-      .child("name");
-
     try {
-      await databaseNameRef.set(newData);
+      // await databaseNameRef.set(newData);
+
+      const updates = await getUserUpdates(
+        profile.uid,
+        "name",
+        newData,
+        database
+      );
+
+      await database.ref().update(updates);
       Alert.success("Nicname has been updated", 4000);
     } catch (error) {
       Alert.error(error.message, 4000);
