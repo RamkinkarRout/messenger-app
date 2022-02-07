@@ -16,6 +16,15 @@
       }
     },
 
+    "messages": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      "$message_id": {
+        ".read": "auth !== null",
+        ".write": "auth !== null"
+      }
+    },
+
     ".read": false,
     ".write": false
   }
