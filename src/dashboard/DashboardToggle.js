@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Alert, Button, Drawer, Icon, Message } from "rsuite";
+import { Alert, Button, Drawer, Icon } from "rsuite";
 import Dashboard from ".";
 import { isOfflineForDatabase } from "../context/profile.context";
 import { useMediaQuery, useModelState } from "../misc/custom-hook";
