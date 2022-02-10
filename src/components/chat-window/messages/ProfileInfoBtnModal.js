@@ -3,14 +3,15 @@ import { Button, Modal } from "rsuite";
 import { useModelState } from "../../../misc/custom-hook";
 import ProfileAvatar from "../../ProfileAvatar";
 
-const ProfileInfoBtnModal = ({ profile, ...btnProps }) => {
-  const { isOpen, open, close } = useModelState();
-
-  const shortName = profile.name.split(" ")[0];
+const ProfileInfoBtnModal = ({ profile, children, ...btnProps }) => {
+  const { isOpen, close, open } = useModelState();
 
   const { name, avatar, createdAt } = profile;
 
+  const shortName = profile.name.split(" ")[0];
+
   const memberSince = new Date(createdAt).toLocaleDateString();
+
   return (
     <>
       <Button {...btnProps} onClick={open}>
@@ -32,6 +33,7 @@ const ProfileInfoBtnModal = ({ profile, ...btnProps }) => {
           <p>Member since {memberSince}</p>
         </Modal.Body>
         <Modal.Footer>
+          {children}
           <Button block onClick={close}>
             Close
           </Button>
