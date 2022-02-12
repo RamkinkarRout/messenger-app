@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { Alert, Icon, Input, InputGroup } from "rsuite";
-import InputGroupButton from "rsuite/lib/InputGroup/InputGroupButton";
 import firebase from "firebase/app";
 import { useProfile } from "../../../context/profile.context";
 import { useParams } from "react-router";
@@ -16,6 +15,7 @@ function assembleMessage(profile, chatId) {
       ...(profile.avatar ? { avatar: profile.avatar } : {}),
     },
     createdAt: firebase.database.ServerValue.TIMESTAMP,
+    likeCount: 0,
   };
 }
 
@@ -26,12 +26,12 @@ const Bottom = () => {
   const { chatId } = useParams();
   const { profile } = useProfile();
 
-  const OnIputChange = useCallback((value) => {
+  const onInputChange = useCallback((value) => {
     setInput(value);
   }, []);
 
   const onSendClick = async () => {
-    if (input.trim === "") {
+    if (input.trim() === "") {
       return;
     }
 
@@ -51,11 +51,12 @@ const Bottom = () => {
     setIsLoading(true);
     try {
       await database.ref().update(updates);
+
       setInput("");
       setIsLoading(false);
-    } catch (error) {
+    } catch (err) {
       setIsLoading(false);
-      Alert.error(error.message, 4000);
+      Alert.error(err.message);
     }
   };
 
@@ -70,19 +71,20 @@ const Bottom = () => {
     <div>
       <InputGroup>
         <Input
-          placeholder="Write a new message here... "
+          placeholder="Write a new message here..."
           value={input}
-          onChange={OnIputChange}
+          onChange={onInputChange}
           onKeyDown={onKeyDown}
         />
-        <InputGroupButton
+
+        <InputGroup.Button
           color="blue"
           appearance="primary"
           onClick={onSendClick}
           disabled={isLoading}
         >
-          <Icon icon={"send"} />
-        </InputGroupButton>
+          <Icon icon="send" />
+        </InputGroup.Button>
       </InputGroup>
     </div>
   );
